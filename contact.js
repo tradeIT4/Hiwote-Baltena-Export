@@ -1,8 +1,7 @@
 const EMAILJS_CONFIG = Object.freeze({
-  serviceId: 'service_m5eislb',
-  templateId: 'template_263uub8',
-  publicKey: '2A15WOFu-gX5V2oDy',
-  recipient: 'info@eferata.com'
+  serviceId: 'service_f4tab15',
+  templateId: 'template_8tr3u7m',
+  publicKey: 'Yz_enruxXneUGjiz1'
 });
 
 function getContactValue(form, name) {
@@ -27,6 +26,7 @@ function getFormMessage(form) {
 document.querySelectorAll('.contact-form').forEach((form) => {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
@@ -53,19 +53,25 @@ document.querySelectorAll('.contact-form').forEach((form) => {
           template_id: EMAILJS_CONFIG.templateId,
           user_id: EMAILJS_CONFIG.publicKey,
           template_params: {
-            name, from_name: name, email, from_email: email, reply_to: email,
-            phone, message, to_email: EMAILJS_CONFIG.recipient
+            name,
+            from_name: name,
+            email,
+            from_email: email,
+            reply_to: email,
+            phone,
+            message
           }
         })
       });
 
       if (!response.ok) throw new Error(await response.text());
+
       status.innerHTML = '<strong>Thank you!</strong><span>Your enquiry has been sent successfully. We will contact you soon.</span>';
       status.classList.add('show');
       form.reset();
     } catch (error) {
       console.error('EmailJS submission failed:', error);
-      status.innerHTML = '<strong>Message not sent</strong><span>Please try again or email us directly at <a href="mailto:info@eferata.com">info@eferata.com</a>.</span>';
+      status.innerHTML = '<strong>Message not sent</strong><span>Please try again shortly.</span>';
       status.classList.add('show', 'error');
     } finally {
       button.disabled = false;
