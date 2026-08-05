@@ -4,6 +4,8 @@ const EMAILJS_CONFIG = Object.freeze({
   publicKey: 'Yz_enruxXneUGjiz1'
 });
 
+const COMPANY_CONTACT_EMAIL = 'hiwoteabebe9@gmail.com';
+
 function getContactValue(form, name) {
   const namedField = form.elements.namedItem(name);
   if (namedField) return namedField.value.trim();
@@ -36,7 +38,7 @@ document.querySelectorAll('.contact-form').forEach((form) => {
     const originalButtonText = button.textContent;
     const status = getFormMessage(form);
     const name = getContactValue(form, 'name');
-    const email = getContactValue(form, 'email');
+    const email = getContactValue(form, 'email') || COMPANY_CONTACT_EMAIL;
     const phone = getContactValue(form, 'phone');
     const message = getContactValue(form, 'message');
 
@@ -56,8 +58,8 @@ document.querySelectorAll('.contact-form').forEach((form) => {
             name,
             from_name: name,
             email,
-            from_email: email,
-            reply_to: email,
+            from_email: COMPANY_CONTACT_EMAIL,
+            reply_to: COMPANY_CONTACT_EMAIL,
             phone,
             message
           }
