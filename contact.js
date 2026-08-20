@@ -1,7 +1,7 @@
 const EMAILJS_CONFIG = Object.freeze({
-  serviceId: 'service_f4tab15',
-  templateId: 'template_8tr3u7m',
-  publicKey: 'Yz_enruxXneUGjiz1'
+  serviceId: 'service_hd9dyyc',
+  templateId: 'template_5y7lpun',
+  publicKey: 'zwaZOOV1u579ntzMr'
 });
 
 const COMPANY_CONTACT_EMAIL = 'hiwoteabebe9@gmail.com';
