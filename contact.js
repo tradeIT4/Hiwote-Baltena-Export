@@ -30,7 +30,20 @@ function getEmailSubject(form) {
     ? 'Quote Request'
     : 'Information Request';
 
-  return `Hiwot Spice Website Form — ${requestType}`;
+  return `[Hiwot Spice Website] New ${requestType}`;
+}
+
+function getFormattedMessage({ name, email, phone, message }) {
+  return [
+    'NEW WEBSITE ENQUIRY',
+    '',
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Phone: ${phone || 'Not provided'}`,
+    '',
+    'Message:',
+    message
+  ].join('\n');
 }
 
 document.querySelectorAll('.contact-form').forEach((form) => {
@@ -50,6 +63,7 @@ document.querySelectorAll('.contact-form').forEach((form) => {
     const phone = getContactValue(form, 'phone');
     const message = getContactValue(form, 'message');
     const subject = getEmailSubject(form);
+    const formattedMessage = getFormattedMessage({ name, email, phone, message });
 
     button.disabled = true;
     button.textContent = 'Sending...';
@@ -64,14 +78,16 @@ document.querySelectorAll('.contact-form').forEach((form) => {
           template_id: EMAILJS_CONFIG.templateId,
           user_id: EMAILJS_CONFIG.publicKey,
           template_params: {
+            title: subject,
             subject,
             name,
             from_name: name,
             email,
             from_email: COMPANY_CONTACT_EMAIL,
-            reply_to: COMPANY_CONTACT_EMAIL,
+            reply_to: email,
             phone,
-            message
+            message: formattedMessage,
+            original_message: message
           }
         })
       });
