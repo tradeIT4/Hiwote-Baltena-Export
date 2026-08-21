@@ -25,6 +25,14 @@ function getFormMessage(form) {
   return message;
 }
 
+function getEmailSubject(form) {
+  const requestType = form.classList.contains('modal-contact-form')
+    ? 'Quote Request'
+    : 'Information Request';
+
+  return `Hiwot Spice Website Form — ${requestType}`;
+}
+
 document.querySelectorAll('.contact-form').forEach((form) => {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -41,6 +49,7 @@ document.querySelectorAll('.contact-form').forEach((form) => {
     const email = getContactValue(form, 'email') || COMPANY_CONTACT_EMAIL;
     const phone = getContactValue(form, 'phone');
     const message = getContactValue(form, 'message');
+    const subject = getEmailSubject(form);
 
     button.disabled = true;
     button.textContent = 'Sending...';
@@ -55,6 +64,7 @@ document.querySelectorAll('.contact-form').forEach((form) => {
           template_id: EMAILJS_CONFIG.templateId,
           user_id: EMAILJS_CONFIG.publicKey,
           template_params: {
+            subject,
             name,
             from_name: name,
             email,
